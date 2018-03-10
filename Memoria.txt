@@ -1,0 +1,11 @@
+
+-- git
+
+C:\Helio\Cursos\Angular\.git\config
+git bash
+
+
+-- Angular
+ng new app1 (criação de aplicação)
+
+ng server / npm start (acessar pasta do projeto para compilar e executar)
