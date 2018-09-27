@@ -25,7 +25,6 @@ export class PainelComponent implements OnInit, OnDestroy {
 
   ngOnDestroy()
   {
-    console.log("Painel destruído")
   }
 
   ngOnInit() {
@@ -51,7 +50,7 @@ export class PainelComponent implements OnInit, OnDestroy {
     this.progresso = this.progresso + (100 / this.frases.length)
     
     if(this.rodada >= this.frases.length)
-      this.eventoFimDoJogo.emit('You Win!')
+      this.eventoFimDoJogo.emit('victory')
 
     this.atualizaRodada()
   }
@@ -66,6 +65,6 @@ export class PainelComponent implements OnInit, OnDestroy {
     this.tentativas--
 
     if(this.tentativas < 0)
-     this.eventoFimDoJogo.emit('You Lose!')
+     this.eventoFimDoJogo.emit('defeat')
   }
 }
