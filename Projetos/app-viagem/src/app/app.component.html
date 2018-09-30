@@ -1,0 +1,29 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div *ngIf="isError == false; else errorBlock">
+  <div style="text-align:center">
+    <h1>
+      {{ title }}
+    </h1>
+  </div>
+  <h2>{{subtitle}}</h2>
+  <div>
+    <div class="col">
+      <div class="row">
+        <button (click) = "ButtonClick()">Aqui</button>
+      </div>
+      <div class="row">
+        <p>Você clicou {{clicksCount}} vezes</p>
+      </div>
+      <div class="row">
+        <p>{{message}}</p>
+      </div>
+      <div class="row">
+        <p>{{message2}}</p>
+      </div>
+      <div class="row">
+        <p>{{message3}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #errorBlock><p>{{errorMessage}}</p></ng-template>
