@@ -1,7 +1,35 @@
 import {Oferta} from './shared/oferta.model'
+import {Http} from '@angular/http'
+import {Injectable} from '@angular/core'
 
+import 'rxjs/add/operator/toPromise'
+
+@Injectable()
 export class OfertaServices
 {
+    constructor(private http: Http)
+    { }
+
+    
+    public getOfertas() : Promise<Array<Oferta>>
+    {
+        return this.getOfertasEmDestaque(true)
+    }
+
+    public getOfertasEmDestaque(filtrarDestaque: boolean) : Promise<Array<Oferta>>
+    {       
+        let uri = "";
+
+        if(filtrarDestaque == true)
+            uri = "http://localhost:3000/ofertas?destaque=true";
+        else
+            uri = "http://localhost:3000/ofertas";
+
+        return this.http.get(uri)
+                .toPromise()
+                .then((resposta: any) => resposta.json())
+    }
+
     public ofertas: Oferta[] = 
     [
         {
@@ -53,7 +81,7 @@ export class OfertaServices
             ]
         }
     ]
-    public getOfertas() : Array<Oferta>
+    public getOfertasSemPromises() : Array<Oferta>
     {       
         return this.ofertas;
     }
