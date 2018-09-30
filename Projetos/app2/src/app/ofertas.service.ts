@@ -57,4 +57,75 @@ export class OfertaServices
     {       
         return this.ofertas;
     }
+
+    public getOfertasSincrono(): Promise<Oferta[]>
+    {
+        return new Promise((resolve, reject)=>
+        {
+            console.log('criação da promise');
+            let success = this.ProcessSyncGet();
+            if(success)
+                resolve(this.ofertas);
+            else
+                reject({codigo_erro:404, mensagem_erro: "Servidor não encontrado."});
+        })
+    }
+
+    public getOfertasAssincrono(): Promise<Oferta[]>
+    {
+        return new Promise((resolve, reject)=>
+        {
+            console.log('criação da promise');
+            let success = this.ProcessSyncGet();
+            if(success)
+                setTimeout(()=> resolve(this.ofertas),5000);
+            else
+                reject({codigo_erro:404, mensagem_erro: "Servidor não encontrado."});
+        })
+        .then((ofertas :Oferta[]) => 
+        {
+            console.log("Pode fazer operações do primeiro then")
+            return ofertas
+        }) 
+        .then((ofertas :Oferta[]) => 
+        {
+            console.log("Pode fazer operações do segundo then")
+            return ofertas
+        })
+    }
+
+    public getOfertasAssincronoComAssincrono(): Promise<Oferta[]>
+    {
+        return new Promise((resolve, reject)=>
+        {
+            console.log('criação da promise');
+            let success = this.ProcessSyncGet();
+            if(success)
+                setTimeout(()=> resolve(this.ofertas),5000);
+            else
+                reject({codigo_erro:404, mensagem_erro: "Servidor não encontrado."});
+        })
+        .then((ofertas1 :Oferta[]) => 
+        {
+            console.log("Pode fazer operações do primeiro then")
+            return ofertas1
+        }) 
+        .then((ofertas2 :Oferta[]) => 
+        {
+            console.log("Pode fazer operações do segundo then")
+            return new Promise((resolve2, reject2) =>
+            {
+                setTimeout(()=> resolve2(ofertas2), 3000)
+            })
+        })
+        .then((ofertas3 :Oferta[]) =>
+        {
+            console.log("Pode fazer operações do terceiro then assíncrono")
+            return ofertas3
+        })
+    }
+
+    private ProcessSyncGet() : boolean{
+        return true
+    }
 }
