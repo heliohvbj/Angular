@@ -16,6 +16,15 @@ export class OfertaServices
         return this.getOfertasEmDestaque(true)
     }
 
+    public getOfertasPorcategoria(categoria: string) : Promise<Array<Oferta>>
+    {       
+        let uri = `http://localhost:3000/ofertas?categoria=${categoria}`;
+
+        return this.http.get(uri)
+                .toPromise()
+                .then((resposta: any) => resposta.json())
+    }
+
     public getOfertasEmDestaque(filtrarDestaque: boolean) : Promise<Array<Oferta>>
     {       
         let uri = "";
