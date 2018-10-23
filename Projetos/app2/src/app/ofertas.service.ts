@@ -3,38 +3,80 @@ import {Http} from '@angular/http'
 import {Injectable} from '@angular/core'
 
 import 'rxjs/add/operator/toPromise'
+import { URL_API } from './app.api'
 
 @Injectable()
 export class OfertaServices
 {
     constructor(private http: Http)
     { }
-
     
     public getOfertas() : Promise<Array<Oferta>>
     {
         return this.getOfertasEmDestaque(true)
     }
 
+    public getComoUsarOfertaPorId(id:number) :Promise<string>
+    {
+        let url = `${URL_API}/como-usar?id=${id}`;
+
+        return this.http.get(url)
+            .toPromise()
+            .then((resposta:any) =>
+            {
+                return resposta.json()[0].descricao;
+            });
+    }
+    public getOndeFicarOfertaPorId(id:number) :Promise<string>
+    {
+        let url = `${URL_API}/onde-fica?id=${id}`;
+
+        return this.http.get(url)
+            .toPromise()
+            .then((resposta:any) =>
+            {
+                return resposta.json()[0].descricao;
+            });
+    }
+
+    public getOfertasPorId(id: number) : Promise<Oferta>
+    {       
+        let url = `${URL_API}/ofertas?id=${id}`;
+
+        return this.http.get(url)
+                .toPromise()
+                .then((resposta: any) =>
+                {
+                   return new Promise((resolve2, reject2) =>
+                   {
+                        setTimeout(() =>  resolve2(resposta), 500);
+                   });
+                })
+                .then((resposta2: any) => 
+                {
+                    return resposta2.json().shift();                
+                })
+    }
+
     public getOfertasPorcategoria(categoria: string) : Promise<Array<Oferta>>
     {       
-        let uri = `http://localhost:3000/ofertas?categoria=${categoria}`;
+        let url = `${URL_API}/ofertas?categoria=${categoria}`;
 
-        return this.http.get(uri)
+        return this.http.get(url)
                 .toPromise()
                 .then((resposta: any) => resposta.json())
     }
 
     public getOfertasEmDestaque(filtrarDestaque: boolean) : Promise<Array<Oferta>>
     {       
-        let uri = "";
+        let url = "";
 
         if(filtrarDestaque == true)
-            uri = "http://localhost:3000/ofertas?destaque=true";
+            url = `${URL_API}/ofertas?destaque=true`;
         else
-            uri = "http://localhost:3000/ofertas";
+            url = `${URL_API}/ofertas`;
 
-        return this.http.get(uri)
+        return this.http.get(url)
                 .toPromise()
                 .then((resposta: any) => resposta.json())
     }

@@ -16,7 +16,7 @@
             <p class="card-text">{{oferta.descricao_titulo}}</p>
             <p class="categoria">{{oferta.categoria}}</p>
             <p class="preço">{{oferta.valor}}</p>
-            <a href="#" class="btn btn-outline-primary">Ver oferta</a>
+            <a [routerLink]="['/oferta', oferta.id]" class="btn btn-outline-primary">Ver oferta</a>
         </div>
     </div>
   </div>  
